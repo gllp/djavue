@@ -3,7 +3,7 @@ RESTORE='\033[0m'
 RED='\033[00;31m'
 GREEN='\033[00;32m'
 YELLOW='\e[0;33m'
-HOST_PROD=buser_project.example.io
+HOST_PROD=3.19.187.6
 
 # Because nobody wants to be memorizing commands all the time
 # Instructions:
