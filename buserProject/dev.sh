@@ -131,7 +131,7 @@ function deploy_prod {
     cd ~/djavue
     git reset --hard
     git pull
-    source dev.sh
+    source buserProject/dev.sh
     dkbuild
     dkrun_prod
   "
