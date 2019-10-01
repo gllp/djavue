@@ -128,7 +128,7 @@ function dkrun_prod {
 
 function deploy_prod {
   ssh ubuntu@$HOST_PROD "
-    cd ~/buser_project
+    cd ~/djavue
     git reset --hard
     git pull
     source dev.sh
