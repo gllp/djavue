@@ -54,6 +54,20 @@ def list_todos(request):
     todos = todo_svc.list_todos()
     return JsonResponse({'todos': todos})
 
+def list_questions(request):
+    questions = [
+        {
+            'id': 1,
+            'author_name': 'Albert Einstein',
+            'author_username': '@alberteinstein',
+            'author_description': 'Doctor at John Hopkins Hospital',
+            'author_avatar': 'https://escolaeducacao.com.br/wp-content/uploads/2018/11/albert-einstein-biografia-750x430.jpg',
+            'created_at': '43 min',
+            'title': 'What is E=mc^2?',
+        }
+    ]
+    return JsonResponse(questions, safe=False)
+
 
 def _user2dict(user):
     d = {

@@ -21,6 +21,21 @@ const api = {
     },
     list_tweets(){
         return get('/api/list_tweets');
+    },
+    get_user_details(username) {
+        return get('/api/get_user_details', {username: username});
+    },
+    follow(username){
+        return post('/api/follow', {username: username});
+    },
+    unfollow(username){
+        return post('/api/unfollow', {username: username});
+    },
+    list_questions(username){
+        return get('/api/list_questions', {username: username});
+    },
+    get_question(questionid){
+        return get('/api/get_question', {question_id: questionid});
     }
 }
 export default api;

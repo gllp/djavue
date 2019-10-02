@@ -9,4 +9,5 @@ urlpatterns = [
 
     url(r'^api/add_todo$', views.add_todo),
     url(r'^api/list_todos$', views.list_todos),
+    url(r'^api/list_questions$', views.list_questions),
 ]

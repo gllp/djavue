@@ -14,7 +14,7 @@ export default {
   },
   //Used for top-level nuxt pages to return async data from promise requests.
   //Solves the SEO problem on site search.
-  //P
+  //The code can be executed both in the backend and in the browser.
   asyncData() {
   	return AppApi.list_tweets().then(
   		(result) => { return {
@@ -24,11 +24,6 @@ export default {
   },
   data () {
     return {}
-  },
-  mounted() {
-  	AppApi.list_tweets().then((result) => {
-  		this.tweets = result.data;
-  	});
   }
 }
 </script>
