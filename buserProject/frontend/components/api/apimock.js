@@ -45,6 +45,32 @@ const api = {
                 {description: 'Walk the dog', done: false}
             ]
         });
+    },
+    list_tweets(){
+        return mockasync(
+            [{
+                author_name: 'Albert Einstein',
+                author_username: '@alberteinstein',
+                author_avatar: 'https://escolaeducacao.com.br/wp-content/uploads/2018/11/albert-einstein-biografia-750x430.jpg',
+                created_at: '43 min',
+                text: 'A bomba atômica é uma das sequelas mais horrendas da humanidade'
+            },
+            { divider: true, inset: false },
+            {
+                author_name: 'Michael Jackson',
+                author_username: '@mjackson',
+                author_avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQQvKGLPvPTHVPZ0baxBJb_EcoOYD72PTGdHsnAgpjWadUxiH2A',
+                created_at: '1 h',
+                text: 'Why? Why? Tell them that\'s human nature' 
+            },
+            { divider: true, inset: false },
+            {
+                author_name: 'George Micael',
+                author_username: '@gmichael',
+                author_avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSFNubinejiQCzktzhOyaoLc_BpB7CqoErwsMyzNAWxFOa7srz2',
+                created_at: '2 h',
+                text: 'Careless Whisper everywhere!!' 
+        }]);
     }
 };
 
