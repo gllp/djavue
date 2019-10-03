@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+
 
 class ActivityLog(models.Model):
     type = models.CharField(max_length=64)
@@ -29,3 +31,53 @@ class Todo(models.Model):
             'description': self.description,
             'done': self.done,
         }
+
+
+class Following(models.Model):
+    follow_from = models.ForeignKey(User, related_name="following_from")
+    follow_to = models.ForeignKey(User, related_name="following_to")
+
+    class Meta:
+        unique_together = ['follow_from', 'follow_to']
+
+
+class Question(models.Model):
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=512)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['user', 'title']
+        ordering = ('-created_at',)
+
+    def to_dict_json(self):
+        return {
+            'id': self.id,
+            'author_name': self.user.first_name,
+            'author_username': self.user.username,
+            'author_description': 'TODO',
+            'author_avatar': 'TODO',
+            'create_at': self.created_at.isoformat(),
+            'title': self.title,
+        }
+
+
+class Answer(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    text = models.CharField(max_length=2048)
+
+    def to_dict_json(self):
+        return {
+            'id': self.id,
+            'author_name': self.user.first_name,
+            'author_username': self.user.username,
+            'author_description': 'TODO',
+            'author_avatar': 'TODO',
+            'text': self.text,
+        }
+
+
+#class UserExtraInfo(models.Model):
+#    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#    description = models.CharField(max_length=512)

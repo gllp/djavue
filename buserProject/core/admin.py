@@ -6,6 +6,7 @@ from core.models import ActivityLog, Todo
 class ActivityLogAdmin(admin.ModelAdmin):
     list_display = ('type', 'logged_user', 'created_at')
 
+
 class TodoAdmin(admin.ModelAdmin):
     list_display = ('description', 'done')
 

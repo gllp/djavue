@@ -4,7 +4,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.contrib import auth
 from commons.django_model_utils import get_or_none
 from commons.django_views_utils import ajax_login_required
-from core.service import log_svc, todo_svc
+from core.service import log_svc, todo_svc, quoraclone_svc
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -54,19 +54,57 @@ def list_todos(request):
     todos = todo_svc.list_todos()
     return JsonResponse({'todos': todos})
 
+
 def list_questions(request):
-    questions = [
-        {
-            'id': 1,
-            'author_name': 'Albert Einstein',
-            'author_username': '@alberteinstein',
-            'author_description': 'Doctor at John Hopkins Hospital',
-            'author_avatar': 'https://escolaeducacao.com.br/wp-content/uploads/2018/11/albert-einstein-biografia-750x430.jpg',
-            'created_at': '43 min',
-            'title': 'What is E=mc^2?',
-        }
-    ]
+    user = request.user if request.user.is_authenticated() else None
+    # Return NULL the .GET option if value not present
+    username = request.GET.get('username')
+    questions = quoraclone_svc.list_questions(user, username)
     return JsonResponse(questions, safe=False)
+
+
+def get_question(request):
+    question_title = request.GET['question_title']
+    question_author = request.GET['author_username']
+    question = quoraclone_svc.get_question(question_title, question_author)
+    return JsonResponse(question)
+
+
+def get_answers(request):
+    question_title = request.GET['question_title']
+    question_author = request.GET['author_username']
+    answers = quoraclone_svc.get_answers(question_title, question_author)
+    return JsonResponse(answers, safe=False)
+
+
+@ajax_login_required
+def follow(request):
+    username = request.POST['username']
+    quoraclone_svc.follow(request.user, username)
+    return JsonResponse({})
+
+
+@ajax_login_required
+def unfollow(request):
+    username = request.POST['username']
+    quoraclone_svc.unfollow(request.user, username)
+    return JsonResponse({})
+
+
+@ajax_login_required
+def post_question(request):
+    text = request.POST['text']
+    quoraclone_svc.post_question(request.user, text)
+    return JsonResponse({})
+
+
+@ajax_login_required
+def post_answer(request):
+    text = request.POST['text']
+    question_title = request.POST['question_title']
+    question_author = request.POST['author_username']
+    quoraclone_svc.post_answer(request.user, question_title, question_author, text)
+    return JsonResponse({})
 
 
 def _user2dict(user):

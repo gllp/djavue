@@ -7,7 +7,7 @@
           </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title>
-            <router-link :to="{name: 'quoraclone-questionid', params: {questionid: question.id}}">{{question.title}}</router-link> - {{question.created_at | timelapsed}}</v-list-tile-title>
+            <router-link :to="{name: 'quoraclone-user-username-questiontitle', params: {username: question.author_username, questiontitle: question.title}}">{{question.title}}</router-link> - {{question.created_at | timelapsed}}</v-list-tile-title>
             <v-list-tile-sub-title>
               <v-layout align-center row>
                 <v-avatar

@@ -14,7 +14,6 @@ export default {
   layout: "quoraclone",
   asyncData(context) {
     const username = context.params.username
-    AppApi.get_user_details(username)
     return Promise.all([AppApi.list_questions(username), AppApi.get_user_details(username)]).then(results => {
         return {
           questions: results[0].data,

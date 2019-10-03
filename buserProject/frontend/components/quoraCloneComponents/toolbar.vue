@@ -2,6 +2,7 @@
   <v-toolbar color="blue-grey" dark fixed app clipped-right>
       <v-icon color="blue darken-2" x-large>fireplace</v-icon>
     <v-toolbar-title>
+      QuoraClone 
       <v-btn :to="{name: 'quoraclone'}" flat dark ripple>Home</v-btn></v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn v-if="!logged_user" flat dark ripple class="ma-0 ml-5"  @click="open_login_dialog($event)">Login</v-btn>

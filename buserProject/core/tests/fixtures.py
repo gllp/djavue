@@ -10,3 +10,9 @@ def user_jon():
         password='snow',
     )
     return ze
+
+
+def quoraclone_users():
+    User.objects.create_user(username='alberteinstein')
+    User.objects.create_user(username='mjackson')
+    User.objects.create_user(username='gmichael')

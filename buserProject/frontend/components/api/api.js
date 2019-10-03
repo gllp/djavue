@@ -34,9 +34,18 @@ const api = {
     list_questions(username){
         return get('/api/list_questions', {username: username});
     },
-    get_question(questionid){
-        return get('/api/get_question', {question_id: questionid});
-    }
+    get_question(question_title, author_username){
+        return get('/api/get_question', {question_title: question_title, author_username: author_username});
+    },
+    get_answers(question_title, author_username){
+        return get('/api/get_answers', {question_title: question_title, author_username: author_username});
+    },
+    post_question(text) {
+        return post('/api/post_question', {text: text}) //TODO create text area
+    },
+    post_answer(question_title, author_username, text) {
+        return post('/api/post_answer', {question_title: question_title, author_username: author_username, text: text}) //TODO create text area
+    },
 }
 export default api;
 
