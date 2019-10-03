@@ -85,7 +85,7 @@ class TestQuoraCloneApi(TestCase):
         new_answer = json.loads(c.content.decode('utf-8'))
         self.assertIsNotNone(new_answer['answer']['id'])
         self.assertEquals(text, new_answer['answer']['text'])
-        self.assertEquals(author_username, new_answer['details']['username'])
+        self.assertIsNotNone(new_answer['details']['username'])
 
     def _assert_question_home(self, client, questions_list):
         c = client.get('/api/list_questions')

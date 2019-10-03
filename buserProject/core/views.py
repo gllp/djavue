@@ -112,8 +112,8 @@ def post_answer(request):
     text = request.POST['text']
     question_title = request.POST['question_title']
     question_author = request.POST['author_username']
-    quoraclone_svc.post_answer(request.user, question_title, question_author, text)
-    return JsonResponse({})
+    new_answer = quoraclone_svc.post_answer(request.user, question_title, question_author, text)
+    return JsonResponse(new_answer)
 
 
 def _user2dict(user):
