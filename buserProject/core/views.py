@@ -4,7 +4,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.contrib import auth
 from commons.django_model_utils import get_or_none
 from commons.django_views_utils import ajax_login_required
-from core.service import log_svc, todo_svc, quoraclone_svc
+from core.service import log_svc, todo_svc, quoraclone_svc, user_svc
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -64,17 +64,26 @@ def list_questions(request):
 
 
 def get_question(request):
+    user = request.user if request.user.is_authenticated() else None
     question_title = request.GET['question_title']
     question_author = request.GET['author_username']
-    question = quoraclone_svc.get_question(question_title, question_author)
+    question = quoraclone_svc.get_question(user, question_title, question_author)
     return JsonResponse(question)
 
 
 def get_answers(request):
+    user = request.user if request.user.is_authenticated() else None
     question_title = request.GET['question_title']
     question_author = request.GET['author_username']
-    answers = quoraclone_svc.get_answers(question_title, question_author)
+    answers = quoraclone_svc.get_answers(user, question_title, question_author)
     return JsonResponse(answers, safe=False)
+
+
+def get_user_details(request):
+    user = request.user if request.user.is_authenticated() else None
+    username = request.GET.get('username')
+    user_details = user_svc.get_user_details(user, username)
+    return JsonResponse(user_details)
 
 
 @ajax_login_required
@@ -94,8 +103,8 @@ def unfollow(request):
 @ajax_login_required
 def post_question(request):
     text = request.POST['text']
-    quoraclone_svc.post_question(request.user, text)
-    return JsonResponse({})
+    question_wrapper = quoraclone_svc.post_question(request.user, text)
+    return JsonResponse(question_wrapper)
 
 
 @ajax_login_required

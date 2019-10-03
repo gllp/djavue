@@ -14,7 +14,7 @@
             size="125px">
             <img :src="user.avatar">
           </v-avatar>
-          <div v-if="logged_user">
+          <div v-if="logged_user && logged_user.username != user.username">
             <v-btn v-if="!user.ifollow" :loading="loading" color="success" @click="follow">Follow</v-btn>
             <v-btn v-if="user.ifollow" :loading="loading" color="error" @click="unfollow">UnFollow</v-btn>
           </div>
@@ -44,7 +44,7 @@ export default {
         this.user.ifollow = true
         this.loading = false
         Snacks.show(this.$store, {
-          text: 'You\'re now folllowing ' + this.user.username,
+          text: 'You\'re now following ' + this.user.username,
           timeout: 3000})
       })
     },

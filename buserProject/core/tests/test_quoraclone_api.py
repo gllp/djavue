@@ -48,9 +48,9 @@ class TestQuoraCloneApi(TestCase):
         self._follow(george, 'alberteinstein')
         self._answer_question(george, QUESTION_EINSTEIN, 'alberteinstein', ANSWER_GEORGE_TO_EINSTEIN)
         self._unfollow(george, 'alberteinstein')
-        self._assert_question_home(george, [])
-        self._assert_question_home(einstein, [QUESTION_GEORGE])
-        self._assert_question_home(jackson, [QUESTION_GEORGE, QUESTION_EINSTEIN])
+        self._assert_question_home(george, [QUESTION_GEORGE])
+        self._assert_question_home(einstein, [QUESTION_GEORGE, QUESTION_EINSTEIN])
+        self._assert_question_home(jackson, [QUESTION_GEORGE, QUESTION_JACKSON, QUESTION_EINSTEIN])
         self._assert_question_home(anon, [QUESTION_GEORGE, QUESTION_JACKSON, QUESTION_EINSTEIN])
         self._assert_question_home_user(anon, 'alberteinstein', [QUESTION_EINSTEIN])
         self._assert_question_home_user(einstein, 'alberteinstein', [QUESTION_EINSTEIN])
@@ -73,21 +73,25 @@ class TestQuoraCloneApi(TestCase):
     def _post_question(self, client, text):
         c = client.post('/api/post_question', {'text': text})
         self.assertEquals(200, c.status_code)
-        data = json.loads(c.content.decode('utf-8'))
-        self.assertIsNotNone(data)
+        new_question = json.loads(c.content.decode('utf-8'))
+        self.assertIsNotNone(new_question['question']['id'])
+        self.assertEquals(text, new_question['question']['title'])
+        self.assertIsNotNone(new_question['details']['username'])
 
     def _answer_question(self, client, question_title, author_username, text):
         c = client.post('/api/post_answer', {'question_title': question_title, 'author_username': author_username,
                                              'text': text})
         self.assertEquals(200, c.status_code)
-        data = json.loads(c.content.decode('utf-8'))
-        self.assertIsNotNone(data)
+        new_answer = json.loads(c.content.decode('utf-8'))
+        self.assertIsNotNone(new_answer['answer']['id'])
+        self.assertEquals(text, new_answer['answer']['text'])
+        self.assertEquals(author_username, new_answer['details']['username'])
 
     def _assert_question_home(self, client, questions_list):
         c = client.get('/api/list_questions')
         self.assertEquals(200, c.status_code)
         data = json.loads(c.content.decode('utf-8'))
-        actual_questions_texts = [question['title'] for question in data]
+        actual_questions_texts = [question_wrapper['question']['title'] for question_wrapper in data]
         self.assertEquals(questions_list, actual_questions_texts)
 
     def _assert_question_page(self, client, author_username, question_title, answers_list):
@@ -97,13 +101,18 @@ class TestQuoraCloneApi(TestCase):
         self.assertEquals(200, c.status_code)
         data_question = json.loads(c.content.decode('utf-8'))
         data_answers = json.loads(ans.content.decode('utf-8'))
-        actual_answers_texts = [answer['text'] for answer in data_answers]
+        actual_answers_texts = [answer_wrapper['answer']['text'] for answer_wrapper in data_answers]
         self.assertEquals(answers_list, actual_answers_texts)
-        self.assertEquals(question_title, data_question['title'])
+        self.assertEquals(question_title, data_question['question']['title'])
 
     def _assert_question_home_user(self, client, username, questions_list):
         c = client.get('/api/list_questions', {'username': username})
+        ans = client.get('/api/get_user_details', {'username': username})
         self.assertEquals(200, c.status_code)
-        data = json.loads(c.content.decode('utf-8'))
-        actual_questions_texts = [question['title'] for question in data]
+        self.assertEquals(200, ans.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        data_ans = json.loads(ans.content.decode('utf-8'))
+        actual_questions_texts = [question_wrapper['question']['title'] for question_wrapper in data_c]
         self.assertEquals(questions_list, actual_questions_texts)
+        for key in ['username', 'avatar', 'description', 'ifollow']:
+            self.assertIsNotNone(data_ans[key])

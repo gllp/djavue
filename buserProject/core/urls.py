@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^api/post_answer$', views.post_answer),
     url(r'^api/get_question$', views.get_question),
     url(r'^api/get_answers$', views.get_answers),
+    url(r'^api/get_user_details$', views.get_user_details),
 ]

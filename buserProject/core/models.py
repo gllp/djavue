@@ -55,8 +55,6 @@ class Question(models.Model):
             'id': self.id,
             'author_name': self.user.first_name,
             'author_username': self.user.username,
-            'author_description': 'TODO',
-            'author_avatar': 'TODO',
             'create_at': self.created_at.isoformat(),
             'title': self.title,
         }
@@ -72,12 +70,19 @@ class Answer(models.Model):
             'id': self.id,
             'author_name': self.user.first_name,
             'author_username': self.user.username,
-            'author_description': 'TODO',
-            'author_avatar': 'TODO',
             'text': self.text,
         }
 
 
-#class UserExtraInfo(models.Model):
-#    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#    description = models.CharField(max_length=512)
+class UserExtraInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    description = models.CharField(max_length=512)
+    avatar = models.CharField(max_length=2048)
+
+    def to_dict_json(self, ifollow):
+        return {
+            'username': self.user.username,
+            'description': self.description,
+            'avatar': self.avatar,
+            'ifollow': ifollow if ifollow else False,
+        }
