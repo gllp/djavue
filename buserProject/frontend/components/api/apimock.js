@@ -88,7 +88,7 @@ const api = {
             ]
         });
     },
-    list_users(){
+    users_list(){
         return mockasync(
             [{
                 username: 'alberteinstein',
@@ -208,6 +208,18 @@ const api = {
                 description: 'Newbie on Quora',
                 ifollow: false,
             }
+        })
+    },
+    post_new_user(user) {
+        return mockasync({})
+    },
+    get_profile(username) {
+        return mockasync({
+            first_name: 'Mario',
+            username: username,
+            email:  'fake@fake.com',
+            avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcROUX4e_XOhgUT9wGMnGM27F6S7f-oBr7OgxeUCXV3DXTKAKIfc',
+            description: "To be or not to be"
         })
     }
 };

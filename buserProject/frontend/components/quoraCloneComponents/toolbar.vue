@@ -5,8 +5,9 @@
       QuoraClone 
       <v-btn :to="{name: 'quoraclone'}" flat dark ripple>Home</v-btn>
       <v-btn v-if="logged_user" :to="{name: 'quoraclone-user-username', params: {username: logged_user.username}}" flat dark ripple>Go to your Feed</v-btn>
-      <v-btn  :to="{name: 'quoraclone-userdiscover'}" flat dark ripple>See Registered Users</v-btn></v-toolbar-title>
+      <v-btn :to="{name: 'quoraclone-userdiscover'}" flat dark ripple>See Registered Users</v-btn></v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn v-if="!logged_user" :to="{name: 'quoraclone-signup'}" flat dark ripple>Sign Up</v-btn>
     <v-btn v-if="!logged_user" flat dark ripple class="ma-0 ml-5"  @click="open_login_dialog($event)">Login</v-btn>
     <v-menu v-if="logged_user" offset-y>
       <v-btn icon slot="activator" class="ma-0 ml-5">

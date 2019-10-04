@@ -93,6 +93,12 @@ def get_users_list(request):
     return JsonResponse(users_lists, safe=False)
 
 
+def get_profile(request):
+    username = request.GET.get('username')
+    user_profile = user_svc.get_profile(username)
+    return JsonResponse(user_profile)
+
+
 @ajax_login_required
 def follow(request):
     username = request.POST['username']
@@ -121,6 +127,12 @@ def post_answer(request):
     question_author = request.POST['author_username']
     new_answer = quoraclone_svc.post_answer(request.user, question_title, question_author, text)
     return JsonResponse(new_answer)
+
+
+def post_new_user(request):
+    user = json.loads(request.POST['user'])
+    registered_user = user_svc.post_new_user(user)
+    return JsonResponse(registered_user)
 
 
 def _user2dict(user):

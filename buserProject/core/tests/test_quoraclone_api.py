@@ -24,7 +24,23 @@ ANSWER_GEORGE_TO_EINSTEIN = 'In physics, mass–energy equivalence states that a
                             ' energy transformations may cause a system to lose some of its energy content (and thus' \
                             ' some corresponding mass), releasing it as the radiant energy of light or as thermal' \
                             ' energy for example.'
+NEW_USER = {
+    'first_name': 'Mario',
+    'last_name': 'Gonzalez',
+    'username': 'mgon',
+    'email': 'mgon@gmail.com',
+    'password': 'abc12345',
+    'description': 'Mathematician at Harvard University'
+}
 
+PREV_USER = {
+    'first_name': 'Mario',
+    'last_name': 'Gonzalez',
+    'username': 'alberteinstein',
+    'email': 'mgon@gmail.com',
+    'password': 'abc12345',
+    'description': 'Mathematician at Harvard University'
+}
 
 class TestQuoraCloneApi(TestCase):
     @classmethod
@@ -59,6 +75,9 @@ class TestQuoraCloneApi(TestCase):
         self._assert_question_page(jackson, 'gmichael', QUESTION_GEORGE, [])
         self._assert_get_users(anon, ['alberteinstein', 'mjackson', 'gmichael'])
         self._assert_get_users(einstein, ['mjackson', 'gmichael'])
+        self._assert_post_new_user(anon, NEW_USER)
+        self._assert_post_prev_user(anon, PREV_USER)
+        self._assert_get_profile(einstein, 'alberteinstein')
         #self._assert_get_users_following(einstein, 'alberteinstein', ['gmichael'])
         #self._assert_get_users_following(jackson, 'mjackson', ['alberteinstein', 'gmichael'])
 
@@ -134,3 +153,21 @@ class TestQuoraCloneApi(TestCase):
         data_c = json.loads(c.content.decode('utf-8'))
         usernames = [user_detail['username'] for user_detail in data_c]
         self.assertEquals(users_list, usernames)
+
+    def _assert_post_new_user(self, client, user):
+        c = client.post('/api/post_new_user', {'user': json.dumps(user)})
+        self.assertEquals(200, c.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        self.assertIsNotNone(data_c['username'])
+
+    def _assert_post_prev_user(self, client, user):
+        c = client.post('/api/post_new_user', {'user': json.dumps(user)})
+        self.assertEquals(200, c.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        self.assertEquals({}, data_c)
+
+    def _assert_get_profile(self, client, username):
+        c = client.get('/api/get_profile', {'username': username})
+        self.assertEquals(200, c.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        self.assertEquals(data_c['username'], username)

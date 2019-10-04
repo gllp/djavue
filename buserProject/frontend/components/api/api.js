@@ -46,6 +46,12 @@ const api = {
     users_list(username){
         return get('/api/users_list', {username: username});
     },
+    post_new_user(user){
+        return post('/api/post_new_user', {user: JSON.stringify(user)})
+    },
+    get_profile(username){
+        return get('/api/get_profile', {username: username})
+    },
 }
 export default api;
 

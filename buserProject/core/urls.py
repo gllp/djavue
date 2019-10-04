@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^api/get_answers$', views.get_answers),
     url(r'^api/get_user_details$', views.get_user_details),
     url(r'^api/users_list$', views.get_users_list),
+    url(r'^api/post_new_user$', views.post_new_user),
+    url(r'^api/get_profile$', views.get_profile),
 ]
