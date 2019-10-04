@@ -86,6 +86,13 @@ def get_user_details(request):
     return JsonResponse(user_details)
 
 
+def get_users_list(request):
+    user = request.user if request.user.is_authenticated() else None
+    username = request.GET.get('username')
+    users_lists = user_svc.get_users_list(user, username)
+    return JsonResponse(users_lists, safe=False)
+
+
 @ajax_login_required
 def follow(request):
     username = request.POST['username']

@@ -76,7 +76,7 @@ class Answer(models.Model):
 
 
 class UserExtraInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="user_extra")
     description = models.CharField(max_length=512)
     avatar_email = models.CharField(max_length=2048)
 

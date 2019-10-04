@@ -88,30 +88,25 @@ const api = {
             ]
         });
     },
-    list_tweets(){
+    list_users(){
         return mockasync(
             [{
-                author_name: 'Albert Einstein',
-                author_username: '@alberteinstein',
-                author_avatar: 'https://escolaeducacao.com.br/wp-content/uploads/2018/11/albert-einstein-biografia-750x430.jpg',
-                created_at: '2019-10-02T15:51:10.186087',
-                text: 'A bomba atômica é uma das sequelas mais horrendas da humanidade'
+                username: 'alberteinstein',
+                avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcROUX4e_XOhgUT9wGMnGM27F6S7f-oBr7OgxeUCXV3DXTKAKIfc',
+                description: 'Doctor at John Hopkins Hospital',
+                ifollow: false,
             },
-            { divider: true, inset: false },
             {
-                author_name: 'Michael Jackson',
-                author_username: '@mjackson',
-                author_avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQQvKGLPvPTHVPZ0baxBJb_EcoOYD72PTGdHsnAgpjWadUxiH2A',
-                created_at: '2019-10-02T15:51:10.186087',
-                text: 'Why? Why? Tell them that\'s human nature'
+                username: 'mjackson',
+                avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQQvKGLPvPTHVPZ0baxBJb_EcoOYD72PTGdHsnAgpjWadUxiH2A',
+                description: 'Dentist at general Dental HealthCare Hospital',
+                ifollow: false,
             },
-            { divider: true, inset: false },
             {
-                author_name: 'George Michael',
-                author_username: '@gmichael',
-                author_avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSFNubinejiQCzktzhOyaoLc_BpB7CqoErwsMyzNAWxFOa7srz2',
-                created_at: '2019-10-02T15:51:10.186087',
-                text: 'Careless Whisper!!'
+                username: 'gmichael',
+                avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSFNubinejiQCzktzhOyaoLc_BpB7CqoErwsMyzNAWxFOa7srz2',
+                description : 'Phd in Physics by MIT',
+                ifollow: false,
         }]);
     },
     follow(username) {

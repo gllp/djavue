@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^api/get_question$', views.get_question),
     url(r'^api/get_answers$', views.get_answers),
     url(r'^api/get_user_details$', views.get_user_details),
+    url(r'^api/users_list$', views.get_users_list),
 ]

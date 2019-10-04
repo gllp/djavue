@@ -19,9 +19,6 @@ const api = {
     list_todos(){
         return get('/api/list_todos');
     },
-    list_tweets(){
-        return get('/api/list_tweets');
-    },
     get_user_details(username) {
         return get('/api/get_user_details', {username: username});
     },
@@ -45,6 +42,9 @@ const api = {
     },
     post_answer(question_title, author_username, text) {
         return post('/api/post_answer', {question_title: question_title, author_username: author_username, text: text})
+    },
+    users_list(username){
+        return get('/api/users_list', {username: username});
     },
 }
 export default api;

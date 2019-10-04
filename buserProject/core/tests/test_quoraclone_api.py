@@ -57,6 +57,10 @@ class TestQuoraCloneApi(TestCase):
         self._assert_question_page(jackson, 'alberteinstein', QUESTION_EINSTEIN, [ANSWER_GEORGE_TO_EINSTEIN,
                                                                                   ANSWER_JACKSON_TO_EINSTEIN])
         self._assert_question_page(jackson, 'gmichael', QUESTION_GEORGE, [])
+        self._assert_get_users(anon, ['alberteinstein', 'mjackson', 'gmichael'])
+        self._assert_get_users(einstein, ['mjackson', 'gmichael'])
+        #self._assert_get_users_following(einstein, 'alberteinstein', ['gmichael'])
+        #self._assert_get_users_following(jackson, 'mjackson', ['alberteinstein', 'gmichael'])
 
     def _follow(self, client, username):
         c = client.post('/api/follow', {'username': username})
@@ -116,3 +120,17 @@ class TestQuoraCloneApi(TestCase):
         self.assertEquals(questions_list, actual_questions_texts)
         for key in ['username', 'avatar', 'description', 'ifollow']:
             self.assertIsNotNone(data_ans[key])
+
+    def _assert_get_users(self, client, users_list):
+        c = client.get('/api/users_list')
+        self.assertEquals(200, c.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        usernames = [user_detail['username'] for user_detail in data_c]
+        self.assertEquals(users_list, usernames)
+
+    def _assert_get_users_following(self, client, username, users_list):
+        c = client.get('/api/users_list', {'username': username})
+        self.assertEquals(200, c.status_code)
+        data_c = json.loads(c.content.decode('utf-8'))
+        usernames = [user_detail['username'] for user_detail in data_c]
+        self.assertEquals(users_list, usernames)
