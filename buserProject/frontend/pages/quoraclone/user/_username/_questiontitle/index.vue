@@ -15,7 +15,7 @@ export default {
   asyncData(context) {
   	const questiontitle = context.params.questiontitle
     const username = context.params.username
-    return Promise.all([AppApi.get_question(questiontitle, username), AppApi.get_answers(questiontitle, username), AppApi.get_user_details(username)]).then(results => {
+    return Promise.all([AppApi.get_question(questiontitle, username), AppApi.get_answers(questiontitle, username)]).then(results => {
       return {
         questionwrapper: results[0].data,
         answers: results[1].data

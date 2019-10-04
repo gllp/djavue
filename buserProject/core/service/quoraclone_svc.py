@@ -23,7 +23,8 @@ def post_question(user, text):
 def post_answer(user, question_title, question_author, text):
     author = User.objects.get(username=question_author)
     question = Question.objects.get(title=question_title, user=author)
-    answer = Answer.objects.create(user=user, question=question, text=text)
+    Answer.objects.create(user=user, question=question, text=text)
+    answer = Answer.objects.get(user=user, question=question, text=text)
     return {'answer': answer.to_dict_json(), 'details': user_svc.get_user_details(user, user.username)}
 
 

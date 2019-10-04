@@ -20,7 +20,8 @@ class AnswerAdmin(admin.ModelAdmin):
 
 
 class UserExtraInfoAdmin(admin.ModelAdmin):
-    list_display = ('user', 'description', 'avatar')
+    list_display = ('user', 'description', 'avatar_email')
+
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)

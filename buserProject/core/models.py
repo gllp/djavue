@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from commons.utils import gravatar_url
 from datetime import datetime
 
 
@@ -77,12 +78,12 @@ class Answer(models.Model):
 class UserExtraInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     description = models.CharField(max_length=512)
-    avatar = models.CharField(max_length=2048)
+    avatar_email = models.CharField(max_length=2048)
 
     def to_dict_json(self, ifollow):
         return {
             'username': self.user.username,
             'description': self.description,
-            'avatar': self.avatar,
+            'avatar': gravatar_url(self.avatar_email),
             'ifollow': ifollow if ifollow else False,
         }

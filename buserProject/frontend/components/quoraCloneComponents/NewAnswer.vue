@@ -32,7 +32,7 @@ export default {
         value: '',
         action: 'Post Answer',
         actionFunc: value => {
-          return AppApi.post_answer(this.questionwrapper.question.title, this.logged_user.username, value).then(answer => {
+          return AppApi.post_answer(this.questionwrapper.question.title, this.questionwrapper.question.author_username, value).then(answer => {
             this.$emit('newanswer', answer)});
         }
       })

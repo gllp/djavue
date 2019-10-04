@@ -11,5 +11,5 @@ def get_user_details(request_user, username):
         ifollow = Following.objects.filter(follow_from=request_user, follow_to=page_user).count() > 0
     if UserExtraInfo.objects.filter(user=page_user).count() == 0:
         return {'username': username, 'avatar': custom_avatar, 'description': '', 'ifollow': ifollow}
-    details = UserExtraInfo.objects.get(username=username)
+    details = UserExtraInfo.objects.get(user=page_user)
     return details.to_dict_json(ifollow)
